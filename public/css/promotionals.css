@@ -1,0 +1,39 @@
+.card-promotional {
+  padding: 10px;
+  color: #6f6f6f;
+}
+.promotional-image {
+  max-height: 200px;
+  width: 100%;
+}
+.right-list {
+  padding-top: 3px;
+  height: 50px;
+}
+.right-list p {
+  display: inline-block;
+  margin-top: 9px;
+  font-weight: bold;
+}
+
+.right-list button {
+  float: right;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.right-list text {
+  color: #7C7C7D;
+  font-weight: lighter;
+}
+.text-left {
+  text-align: left !important;
+}
+.form-group input {
+  margin-bottom: 6px;
+}
+.form-upload p {
+  color: #666;
+}
+.btn-apart {
+  margin: 10px 0;
+}

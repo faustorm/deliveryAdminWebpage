@@ -1,0 +1,114 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Recomendaciones del Día </h2>
+      <h2 class="alone-subtitle">{{place.place}} Aparecera como recomendación del dia a nuestros clientes en <br> <strong>{{prints.City.city}}</strong></h2>
+      <a data-toggle="modal" ng-if="payingPrints == false" ng-click="preparePayPrints()">
+        <button type="button" class="btn btn-shadow btn-submit btn-title"> Obtener más recomendaciones </button>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div style="background: url({{place.coverPicture}}); height: 160px;background-size: cover;background-repeat: no-repeat; background-position: 50% 50%;">
+          <div class="card-header">
+            <div class="row left-padding">
+              <div class="col col-20" >
+                <img src="{{place.logo}}" class="img-circle logo-card">
+              </div>
+              <div class="col col-80" style="padding-left: 10px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card review-card" >
+        <div class="pay-header">
+          <p>{{prints.logs}}</p>
+        </div>
+        <div class="pay-body">
+          <h1>RECOMENDACIONES RESTANTES</h1>
+          <input type="button" ng-if="payingPrints == false" ng-click="preparePayPrints()" class="btn-full btn btn-option btn-shadow" style="width: 100%;" value="Obtener recomendaciones del Día">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="card card-promotional" ng-if="payingPrints == true">
+            <strong>
+              <p class="section-title">
+                Llega a miles de usuarios
+              </p>
+            </strong>
+            <p class="text-center">A través de lookat, se la recomendación del dia de las personas que estan cerca de ti.</p>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Cantidad</th>
+                  <th>Precio Unitario</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>500</td>
+                  <td>$1.75</td>
+                  <td>$875 MXN</td>
+                </tr>
+                <tr>
+                  <td>2,000</td>
+                  <td>$1.50</td>
+                  <td>$3,000 MXN</td>
+                </tr>
+                <tr>
+                  <td>5,000</td>
+                  <td>$1.25</td>
+                  <td>$6,250 MXN</td>
+                </tr>
+                <tr>
+                  <td>10,000</td>
+                  <td>$0.75</td>
+                  <td>$7,500 MXN</td>
+                </tr>
+              </tbody>
+            </table>
+            <form ng-submit='payPrint(print)'>
+              <div class="form-group">
+                <label for="sel1" style="color: #666">Tarjeta De Credito </label>
+                <select class="form-control" id="sel1" ng-model="print.card">
+                  <option ng-repeat="card in Cards" value="{{card.token}}">{{card.cardName}}</option>
+                </select>
+              </div>
+              <button type="button" ng-click="prepareAddCard()" style="margin-bottom: 15px;" class="btn btn-warning-outline">
+                Agregar Tarjeta de Crédito
+              </button>
+              <div class="form-group">
+                <label for="sel1" style="color: #666">Impresiones</label>
+                <select class="form-control" id="sel1" ng-model="print.logs">
+                  <option value="500"> 500 </option>
+                  <option value="2000"> 2,000 </option>
+                  <option value="5000"> 5,000 </option>
+                  <option value="10000"> 10,000 </option>
+                </select>
+              </div>
+              <button type="submit" ng-if="print.logs != null && print.card != null" class="btn btn-lg btn-block btn-submit">
+                <pepe ng-if="print.logs == 500"> Pagaras $875 MXN por 500 Impresiones Mas. </pepe>
+                <pepe ng-if="print.logs == 2000"> Pagaras $3,000 MXN por 2,000 Impresiones Mas. </pepe>
+                <pepe ng-if="print.logs == 5000"> Pagaras $6,250 MXN por 5,000 Impresiones Mas. </pepe>
+                <pepe ng-if="print.logs == 10000"> Pagaras $7,500 MXN por 10,000 Impresiones. </pepe>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-include src="'../templates/bar.html'"></ng-include>
+<cardmodal visible="addingCard"></cardmodal>

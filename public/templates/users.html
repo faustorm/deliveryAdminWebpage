@@ -1,0 +1,38 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Usuarios </h2>
+      <h2 class="alone-subtitle">Pendientes de Activación</h2>
+    </div>
+  </div>
+  <div class="row" ng-if="pendingUsers.length != 0">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="user in pendingUsers">
+          <p> {{user.name}} </p>
+          <button type="button"  ng-click="activeForm($index)" class="btn btn-submit-outline">
+            Opciones
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<couponmodal visible="addingActive">
+  <div class="review-card">
+    <div class="review-header bank-header">
+      <p class="section-title">Información del Usuario</p>
+    </div>
+    <div class="review-body bank-body" >
+      <p><strong>Nombre: </strong>{{activateUser.name}}</p>
+      <p><strong>Correo Electrónico: </strong>{{activateUser.email}}</p>
+      <p><strong>Tipo de Comida: </strong>{{activateUser.phoneNumber}}</p>
+    </div>
+    <input ng-click="submitActive()" class="btn btn-submit btn-shadow btn-full" value="Activar Usuario">
+  </div>
+</couponmodal>

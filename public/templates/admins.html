@@ -1,0 +1,69 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Administradores </h2>
+      <h2 class="alone-subtitle">La gente en esta sección, tiene la posibilidad de administrar viajes, salarios y efectivo.</h2>
+      <div class="row">
+        <a data-toggle="modal" ng-click="prepareAddAdmin()">
+          <button type="button" class="btn btn-shadow btn-submit btn-title"> Agregar Administrador </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="admin in Admins">
+          <p> {{admin.User.name}} </p>
+          <button type="button"  ng-if="admin.idUser != zone.idUser" ng-click="prepareAdmin(admin.id)" class="btn btn-submit-outline">
+            Opciones
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<modal title="Administrar" visible="checkingAdmin">
+  <h2 class="alone-header"> Contacto </h2>
+  <div class="list-group">
+    <div class="list-group-item right-list product-item" style="border: 0;">
+      <p> {{ActualAdmin.User.phoneNumber}} </p>
+      <a href="tel:{{ActualAdmin.User.phoneNumber}}">
+        <button type="button" style="width: 100px;" ng-click="prepareAdmin(admin.id)" class="btn btn-submit-outline">
+          Llamar
+        </button>
+      </a>
+    </div>
+    <div class="list-group-item right-list product-item" style="border: 0;">
+      <p> {{ActualAdmin.User.email}} </p>
+      <a href="mailto:{{ActualAdmin.User.email}}">
+        <button type="button"  style="width: 100px;" ng-click="prepareAdmin(admin.id)" class="btn btn-submit-outline">
+          Enviar correo
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <a data-toggle="modal" ng-click="deleteAdmin(ActualAdmin.User.email)">
+      <button type="button" class="btn btn-shadow btn-delete btn-title"> Eliminar Administrador </button>
+    </a>
+  </div>
+</modal>
+<couponmodal visible="addingAdmin">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='postAdmin(email)'>
+        <div class="form-group" >
+          <label for="sel1">Email de la persona: </label>
+          <input ng-model="email.email" type="text" class="form-control" placeholder="Correo electronico del usuario" aria-describedby="basic-addon1">
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Agregar Administrador">
+      </form>
+    </div>
+  </div>
+</couponmodal>

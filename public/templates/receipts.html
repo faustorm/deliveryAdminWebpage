@@ -1,0 +1,273 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="alone-header"> Depositos e Información Bancaria </h2>
+      <h2 class="alone-subtitle">Semanalmente te depositaremos los pagos efectuados con tarjeta en la plataforma<br> sin ningun costo adicional.</h2>
+      <div class="row">
+        <a data-toggle="modal" ng-if="bankAccount == null" ng-click="prepareAddProduct()">
+          <button type="button" ng-click="prepareAddBankAccount()" class="btn btn-shadow btn-submit btn-title"> Agregar Cuenta Bancaria </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card review-card" ng-if="bankAccount && editingBankAccount == false">
+        <div class="review-header bank-header">
+          <p class="section-title">Información Bancaria</p>
+        </div>
+        <div class="review-body bank-body" >
+          <p><strong>Razon Social: </strong>{{bankAccount.bussinessName}}</p>
+          <p><strong>RFC: </strong>{{bankAccount.RFC}}</p>
+          <p><strong>Domicilio Fiscal: </strong>{{bankAccount.address}}</p>
+          <p><strong>Email (Encargado): </strong>{{bankAccount.email}}</p>
+          <p><strong>Número Telefonico (Encargado): </strong>{{bankAccount.phoneNumber}}</p>
+        </div>
+      </div>
+      <div class="card card-promotional" ng-if="pendingAmount">
+        <div class="review-header bank-header">
+          <p class="section-title">Credito pendiente de depositar</p>
+        </div>
+        <div class="review-body deposit-body" >
+          <p><strong>Cantidad: </strong><bagel>${{pendingAmount}} MXN</bagel></p>
+          <button type="button" ng-click="prepareFetchCharges()" class="btn btn-submit-outline no-outline btn-block">
+            Ver Cargos Pendientes
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-md-offset-1" >
+      <div class="card card-promotional" ng-repeat="deposit in Deposits">
+        <div class="review-body deposit-body" >
+          <p><strong>Cantidad: </strong><bagel>${{deposit.amount}} MXN</bagel></p>
+          <p><strong>Fecha: </strong><bagel>{{deposit.createdAt | date:'shortDate'}}</bagel></p>
+          <p><strong>ID: </strong><bagel>#{{deposit.id}}</bagel></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<couponmodal visible="addingBankAccount">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='postBankAccount(bankAccountData)'>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Razón Social: </label>
+          <input ng-model="bankAccountData.bussinessName" class="form-control" placeholder="Razon Social (Nombre a la que esta la cuenta)" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">RFC: </label>
+          <input ng-model="bankAccountData.RFC" class="form-control" placeholder="RFC" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Domicilio Fiscal: </label>
+          <input ng-model="bankAccountData.offices" class="form-control" placeholder="Domicilio Fiscal" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Banco: </label>
+          <input type="text" ng-model="bankAccountData.bankName" class="form-control" placeholder="Nombre de Banco" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Numero de cuenta: </label>
+          <input ng-model="bankAccountData.accountNumber"  class="form-control" placeholder="Numero de Cuenta" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Cuenta CLABE: </label>
+          <input ng-model="bankAccountData.clabeNumber" class="form-control" placeholder="Numero CLABE" aria-describedby="basic-addon1">
+        </div>
+        <button type="submit" class="btn btn-lg btn-submit"> Agregar Informacion Bancaria </button>
+      </form>
+    </div>
+  </div>
+</couponmodal>
+<couponmodal visible="editingBankAccount">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='putBankAccount()'>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Razón Social: </label>
+          <input ng-model="bankAccount.bussinessName" class="form-control" placeholder="Razon Social (Nombre a la que esta la cuenta)" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">RFC: </label>
+          <input ng-model="bankAccount.RFC" class="form-control" placeholder="RFC" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Domicilio Fiscal: </label>
+          <input ng-model="bankAccount.offices" class="form-control" placeholder="Domicilio Fiscal" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Banco: </label>
+          <input type="text" ng-model="bankAccount.bankName" class="form-control" placeholder="Nombre de Banco" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Numero de cuenta: </label>
+          <input ng-model="bankAccount.accountNumber"  class="form-control" placeholder="Numero de Cuenta" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Cuenta CLABE: </label>
+          <input ng-model="bankAccount.clabeNumber" class="form-control" placeholder="Numero CLABE" aria-describedby="basic-addon1">
+        </div>
+        <button type="submit" class="btn btn-lg btn-submit">  Guardar Cambios </button>
+      </form>
+    </div>
+  </div>
+</couponmodal>
+<couponmodal visible="seeingPendingCharges">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <a ng-repeat="charge in Charges" ng-click="getSpecificOrder(charge.idPlace, charge.idOrder)" class="list-group-item charge-list product-item">
+        <p> {{charge.description}}</p>
+        <caret>
+          ${{charge.bussinessCredit}}
+        </caret>
+      </a>
+    </div>
+  </div>
+</couponmodal>
+<seriousmodal title="Analizar pedido" visible="showOrderDetailModal">
+	<div class="row">
+		<div class="col-md-2">
+			<img class="img-circle img-avatar" src="{{orderZoom.User.photo}}" ng-if="orderZoom.idUser != null">
+		</div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-12 thumbnail-col">
+					<div class="caption"  style="padding: 0">
+						<h5 class="text-link" ng-if="orderZoom.idUser != null" ng-click="trendingUser(orderZoom)">{{orderZoom.User.name}}</h5>
+						<h5 ng-if="orderZoom.idUser == null">{{orderZoom.User.name}}</h5>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.reservation != null">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa fa-bell-o" aria-hidden="true"></i> Esta cuenta se pidio para la reservacion hecha el {{orderZoom.orderDay | date: 'fullDate'}}
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.status == 1">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa fa-exclamation-triangle"></i> Esperando Confirmacion
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.status == 2">
+				<div class="col-md-12 thumbnail-col" style="color: #76BAA0; margin-bottom: 3px;">
+					<i class="fa fa-check-circle"></i> Orden Confirmada
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.status == 4">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa fa-check-circle"></i> Ya Ocurrio la Orden
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.status == 3">
+				<div class="col-md-12 thumbnail-col" style="color: #9C1414; margin-bottom: 3px;">
+					<i class="fa fa-ban"></i> La orden fue rechazada
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.idAddress != null">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa fa-map-marker"></i> {{orderZoom.Address.address}}
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom && orderZoom.idAddress != null">
+				<div class="col-md-12">
+					<ng-map center="[{{orderZoom.Address.lat}}, {{orderZoom.Address.lng}}]" scrollwheel="false" default-style="false" id="map" zoom="17" style="margin-bottom: 10px; height: 300px; width: 100%; border-radius: 0;" >
+	          <marker position="[{{orderZoom.Address.lat}}, {{orderZoom.Address.lng}}]" icon="{path:'CIRCLE', scale: 10}" draggable="false"></marker>
+	        </ng-map>
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.cash == true">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa fa-money"></i> Necesitara cambio de ${{orderZoom.exchange}}
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.idCard != null">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa  fa-credit-card-alt"></i> El cliente pagara con tarjeta a traves del app.
+				</div>
+			</div>
+			<div class="row" ng-if="orderZoom.tip != null">
+				<div class="col-md-12 thumbnail-col">
+					<p ng-if="orderZoom.tip == 0.10">
+						<i class="ion-social-usd"></i>
+						El cliente Puso Propina del 10%
+					</p>
+					<p ng-if="orderZoom.tip == 0.15">
+						<i class="ion-social-usd"></i>
+						El cliente Puso Propina del 15%
+					 </p>
+					<p ng-if="orderZoom.tip == 0.20">
+						<i class="ion-social-usd"></i>
+						El cliente Puso Propina del 20%
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 thumbnail-col">
+					<i class="fa  fa-calendar"></i> {{orderZoom.createdAt | date:'shortDate'}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 thumbnail-col">
+					<i class="fa fa-clock-o"></i><strong> <span am-time-ago="orderZoom.createdAt"></span></strong>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 thumbnail-col">
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="product in products">
+							{{product.Product.product}}
+							<pepe ng-if="product.idOption != null">
+								({{product.Option.title}})
+							</pepe> x{{product.quantity}}
+							<span style="float: right;"> ${{product.Product.price}}</span>
+						</li>
+						<li class="list-group-item" ng-repeat="product in guarnitions">
+							{{product.Option.title}} (Guarnición)
+							<span style="float: right;"> $0</span>
+						</li>
+						<li class="list-group-item" ng-if="orderZoom.type == 'homeDelivery'">
+							Costo de Envio <span style="float: right;"> ${{orderZoom.Place.shipping}}</span>
+						</li>
+						<li class="list-group-item" ng-if="orderZoom.comments != ' '">
+							<i class="fa fa-comment"></i> {{orderZoom.comments}}
+						</li>
+						<li class="list-group-item" >
+							<strong>Total: <span style="float: right;">${{total}} <span ng-if="orderZoom.type == 'homeDelivery'"> + ${{orderZoom.Place.shipping}}</span></span></strong>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<form ng-submit="payOrder(employee)" ng-if="orderZoom.status == 1">
+				<div class="row" style="margin-bottom: 10px;" ng-if="orderZoom.hour == null && orderZoom.type == 'homeDelivery'">
+					<h6 style="text-align: center; width: 100%;">
+						De esta manera, te comprometes a entregar la comida <br> 40 minutos
+					</h6>
+				</div>
+				<div class="row" style="margin-bottom: 10px;">
+					<h6 style="text-align: center; width: 100%;" ng-if="orderZoom.hour != null">
+						Necesita estar lista a las {{orderZoom.hour}}
+					</h6>
+				</div>
+				<div class="row" ng-if="orderZoom.status == 1">
+					<div class="col-md-6 thumbnail-col" style="margin-bottom: 3px;">
+						<button type="submit" class="btn btn-submit btn-block">Confirmar Pedido</button>
+					</div>
+					<div class="col-xs-6 thumbnail-col" style="margin-bottom: 3px;">
+						<button type="button" class="btn btn-delete btn-block" ng-click="declineOrder(orderZoom.id)"> Rechazar </button>
+					</div>
+				</div>
+			</form>
+			<div class="row" ng-if="orderZoom.status == 2">
+				<div class="col-xs-12 thumbnail-col" style="margin-bottom: 3px;">
+					<button  ng-click="deliveredOrder(orderZoom.id)"  class="btn btn-submit btn-block">Ya se entrego</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</seriousmodal>

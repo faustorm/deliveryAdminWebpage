@@ -1,0 +1,145 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Lugares </h2>
+      <a data-toggle="modal" ng-click="prepareRegisterDeposit()">
+        <button type="button" class="btn btn-shadow btn-submit btn-title"> Registrar deposito </button>
+      </a>
+    </div>
+  </div>
+  <div class="row" ng-if="pendingPlaces.length != 0">
+    <div class="col-md-6 col-md-offset-3">
+      <h2 class="alone-subtitle">Pendientes de Activación</h2>
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="place in pendingPlaces">
+          <p> {{place.place}} ({{place.branch}})</p>
+          <button type="button"  ng-click="activeForm($index)" class="btn btn-submit-outline">
+            Opciones
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h2 class="alone-subtitle">Activos</h2>
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="place in Places">
+          <p> {{place.place}} ({{place.branch}})</p>
+          <button type="button"  ng-click="preparePlace($index)" class="btn btn-submit-outline">
+            Opciones
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<modal title="Administrar" visible="analyzingPlace">
+  <div class="review-card">
+    <div class="review-header bank-header">
+      <p class="section-title">Información</p>
+    </div>
+    <div class="review-body bank-body" >
+      <p><strong>Suscripción: </strong>{{ActualPlace.subscription}}</p>
+      <p ng-if="bankAccount"><strong>Razon Social: </strong>{{bankAccount.bussinessname}}</p>
+      <p ng-if="bankAccount"><strong>RFC: </strong>{{bankAccount.RFC}}</p>
+      <p ng-if="bankAccount"><strong>Domicilio Fiscal: </strong>{{bankAccount.address}}</p>
+      <p><strong>Número telefónico: </strong>{{ActualPlace.phoneNumber}}</p>
+    </div>
+    <div class="review-header bank-header">
+      <p class="section-title">Contacto</p>
+    </div>
+    <div class="review-body bank-body" >
+      <table class="table table-striped no-margin">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Telefono</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="admin in admins" class="mainTable">
+            <td>{{admin.name}}</td>
+            <td>{{admin.email}} </td>
+            <td>
+              {{admin.phoneNumber}}
+            </td>
+            <td>
+              <button type="button" ng-click="removeAdmin(admin.idAdmin)" class="btn btn-block btn-delete-outline">Quitar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a ng-click="prepareAddAdmin()">
+        <button type="button" class="btn btn-block btn-submit">Agregar Administrador</button>
+      </a>
+    </div>
+  </div>
+</modal>
+<couponmodal visible="addingActive">
+  <div class="review-card">
+    <div class="review-header bank-header">
+      <p class="section-title">Información del lúgar</p>
+    </div>
+    <div class="review-body bank-body" >
+      <p><strong>Nombre: </strong>{{activatePlace.place}}</p>
+      <p><strong>Sucursal: </strong>{{activatePlace.branch}}</p>
+      <p><strong>Tipo de Comida: </strong>{{activatePlace.category}}</p>
+    </div>
+    <div class="review-header bank-header">
+      <p class="section-title">Contacto</p>
+    </div>
+    <div class="review-body bank-body" >
+      <p><strong>Nombre del Encargado: </strong>{{activatePlace.name}}</p>
+      <p><strong>Número Telefonico (Encargado): </strong>{{activatePlace.phoneNumber}}</p>
+      <p><strong>Email (Encargado): </strong>{{activatePlace.email}}</p>
+    </div>
+    <input ng-click="submitActive()" class="btn btn-submit btn-shadow btn-full" value="Activar Lúgar">
+  </div>
+</couponmodal>
+<couponmodal visible="addingDeposit">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='submitDeposit(deposit)'>
+        <div class="form-group">
+          <label for="sel1">Lúgar: </label>
+          <select class="form-control"  ng-model="desition.place" ng-change="changedValue(desition.place)" >
+            <option ng-repeat="place in fullServicePlaces" value="{{place}}" >{{place.place}} - {{place.branch}}</option>
+            <option ng-repeat="place in standardPlaces" value="{{place}}" >{{place.place}} - {{place.branch}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel1">Cantidad: </label>
+          <select class="form-control"  ng-model="deposit.months">
+            <option ng-if="deposit.type == 'fullService'" value="1" >1 Mes - $3,500 MXN</option>
+            <option ng-if="deposit.type == 'fullService'" value="2" >2 Meses - $7,000 MXN</option>
+            <option ng-if="deposit.type == 'fullService'" value="3" >3 Meses - $10,500 MXN</option>
+            <option ng-if="deposit.type == 'standard'" value="1" >1 Mes - $899 MXN</option>
+            <option ng-if="deposit.type == 'standard'" value="2" >2 Meses - $1,798 MXN</option>
+            <option ng-if="deposit.type == 'standard'" value="3" >3 Meses - $2,697 MXN</option>
+          </select>
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Agregar Deposito">
+      </form>
+    </div>
+  </div>
+</couponmodal>
+
+<couponmodal visible="addingAdmin">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='submitAdmin(email)'>
+        <div class="form-group">
+          <input type="email" ng-model="email" placeholder="Correo electrónico" class="form-control">
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Agregar Deposito">
+      </form>
+    </div>
+  </div>
+</couponmodal>

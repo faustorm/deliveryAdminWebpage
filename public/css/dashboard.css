@@ -1,0 +1,138 @@
+.place-header {
+  font-family: 'Gotham-Bold';
+  font-size: 36px;
+	color: #262627;
+  text-align: left;
+	border: 0;
+}
+.place-branch {
+  font-family: 'Gotham-Medium';
+  font-size: 18px;
+	color: #7C7C7D;
+  text-align: left;
+	border: 0;
+}
+.place-container {
+  margin: 0;
+  width: 100%;
+}
+.btn-recommendations {
+  width: initial;
+}
+.btn-recommendations:hover {
+  width: initial !important;
+}
+.place-container .row {
+  margin-bottom: 15px;
+}
+.notify-card {
+  box-shadow: 2px 2px 5px #888888;
+  padding: 5px 30px;
+  background-color: #579055;
+  border-radius: 10px;
+}
+.notify-card h1{
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.notify-card p{
+  color: #e5e5e5;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.service-heading {
+  color: white;
+  background-color: #9e301b
+}
+.service-title {
+  font-size: 20px;
+  font-family: 'Gotham-Bold';
+}
+.servie-subtitle {
+  font-size: 10px;
+  font-family: 'Gotham-Book';
+}
+.service-counter {
+  font-size: 40px;
+  font-family: 'Gotham-Bold';
+}
+.partial-button {
+  width: 40%;
+  margin-left: 30%;
+}
+.text-info-modal {
+  margin-top: 15px;
+  text-align: center;
+  color: #666
+}
+.img-avatar {
+  height: 50px;
+  width: 50px;
+  padding: 0 !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px !important;
+}
+.reservation-list {
+  margin-top: 15px;
+}
+.caption h5{
+  color: #666;
+}
+.caption .text-link {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+.thumbnail-col {
+  padding-left: 15px;
+  color: #666;
+  margin-bottom: 3px;
+}
+.service-body {
+  color: #9e301b;
+  background-color: #EEEEEE;
+  padding: 0
+}
+.no-margin {
+  margin: 0 !important;
+}
+.names-table .text-link {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+.names-table{
+  text-align: center;
+}
+.caption {
+  color: #666;
+}
+.alter-heading {
+  background-color: #a8a8a8 !important;
+  color: #fff !important;
+}
+
+.text-link {
+  text-decoration: underline !important;
+  cursor: pointer;
+  color: #666;
+}
+.text-link:hover {
+  text-decoration: underline !important;
+  cursor: pointer;
+  color: #666;
+}
+
+.mainTable {
+  color: #4c4c4c
+}
+.text-delete{
+  color: #D52B2D;
+}
+.text-submit {
+  color: #579055
+}

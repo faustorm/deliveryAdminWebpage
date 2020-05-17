@@ -1,0 +1,86 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Pagar Depositos </h2>
+    </div>
+  </div>
+  <div class="row" ng-if="placeDeposits.length > 0">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-subtitle">Depositos a lugares</h2>
+    </div>
+  </div>
+  <div class="row" ng-if="placeDeposits.length > 0">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="deposit in placeDeposits">
+          <p>{{deposit.place}} - ${{deposit.pending}} MXN</p>
+          <button type="button" ng-click="checkPlaceBankAccount(deposit.idPlace, deposit.pending)" class="btn btn-warning-outline">
+            Pagar
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-if="Deposits.length > 0">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-subtitle">Depositos a Repartidores</h2>
+    </div>
+  </div>
+  <div class="row"  ng-if="Deposits.length > 0">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="deposit in Deposits">
+          <p>{{deposit.name}} - {{deposit.total}}</p>
+          <button type="button" ng-click="checkBankAccount(deposit.idDriver, deposit.total)" class="btn btn-warning-outline">
+            Detalles
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<couponmodal visible="showBankAccount">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <div class="row">
+        <p><strong>Nombre: </strong>{{bankAccount.holderName}}</p>
+        <p><strong>Número de Tarjeta: </strong>{{bankAccount.cardNumber}}</p>
+        <p><strong>Cuenta CLABE: </strong>{{bankAccount.clabeNumber}}</p>
+        <p><strong>Banco: </strong>{{bankAccount.bankName}}</p>
+        <hr>
+        <p><strong>Importe: </strong>{{toDeposit}}</p>
+        <button type="button" ng-click="postDeposit(bankAccount.idDriver)" class="btn btn-warning-outline no-outline">
+          Enviar Pago
+        </button>
+      </div>
+    </div>
+  </div>
+</couponmodal>
+
+<couponmodal visible="showPlaceBankAccount">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <div class="row">
+        <p><strong>Razon Social: </strong>{{bankAccount.bussinessname}}</p>
+        <p><strong>RFC: </strong>{{bankAccount.RFC}}</p>
+        <p><strong>Domicilio Fiscal: </strong>{{bankAccount.address}}</p>
+        <p><strong>Banco: </strong>{{bankAccount.bankName}}</p>
+        <p><strong>Número de cuenta: </strong>{{bankAccount.accountNumber}}</p>
+        <p><strong>Cuenta CLABE: </strong>{{bankAccount.clabeNumber}}</p>
+        <hr>
+        <p><strong>Importe: </strong>{{toDeposit}}</p>
+        <p><strong>Concepto: </strong>lookat - Semana {{weekYear}}</p>
+        <p><strong>Referencia (Numérica): </strong>{{dateReference}}{{place.id}}</p>
+        <button type="button" ng-click="postPlaceDeposit(bankAccount.idPlace)" class="btn btn-warning-outline no-outline">
+          Enviar Pago
+        </button>
+      </div>
+    </div>
+  </div>
+</couponmodal>

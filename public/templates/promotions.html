@@ -1,0 +1,124 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Promociones Actuales </h2>
+      <div class="row">
+        <a data-toggle="modal" ng-click="prepareAddCode()">
+          <button type="button" class="btn btn-shadow btn-submit btn-title"> Agregar Código </button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-if="codeDiscounts.length != 0">
+    <div class="col-md-8 col-md-offset-2">
+      <h2 class="alone-subtitle">Codigos</h2>
+      <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>Código</th>
+           <th>Limite</th>
+           <th>Restantes</th>
+           <th>Descripción</th>
+           <th>Cantidad</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr ng-repeat="code in codeDiscounts">
+           <td>{{code.code}}</td>
+           <td>{{code.limitUser}}</td>
+           <td>{{code.codeLeft}}</td>
+           <td>{{code.description}}</td>
+           <td>
+             <pepe ng-if="code.concept == 'percentage'">
+               {{code.amount * 100}}%
+             </pepe>
+             <pepe ng-if="code.concept == 'price'">
+               ${{code.amount}} MXN
+             </pepe>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+  </div>
+  <div class="row" ng-if="productDiscounts.length != 0">
+    <div class="col-md-8 col-md-offset-2">
+      <h2 class="alone-subtitle">Productos</h2>
+      <table class="table table-bordered">
+       <thead>
+         <tr>
+           <th>Producto</th>
+           <th>Lúgar</th>
+           <th>Limite</th>
+           <th>Restantes</th>
+           <th>Descripción</th>
+           <th>Cantidad</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr ng-repeat="code in productDiscounts">
+           <td>{{code.product}}</td>
+           <td>{{code.place}}</td>
+           <td>{{code.limitUser}}</td>
+           <td>{{code.codeLeft}}</td>
+           <td>{{code.description}}</td>
+           <td>
+             <pepe ng-if="code.concept == 'percentage'">
+               {{code.amount * 100}}%
+             </pepe>
+             <pepe ng-if="code.concept == 'price'">
+               ${{code.amount}} MXN
+             </pepe>
+           </td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+  </div>
+</div>
+<modal visible="addingOffer">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='uploadOffer(newOffer)'>
+        <div class="form-group" >
+          <label for="sel1">Descripción del código: </label>
+          <input ng-model="newOffer.description" type="text" class="form-control" placeholder="Ej. 10% de descuento en Alitas Big" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1">Cantidad: (Número de personas que podran obtenerlo)</label>
+          <input ng-model="newOffer.codeLeft" class="form-control" type="number" placeholder="Ej. 50">
+        </div>
+        <div class="form-group">
+          <label for="sel1">Número de veces que el mismo usuario puede obtenerla:</label>
+          <input ng-model="newOffer.limitUser" class="form-control" type="number" placeholder="Ej. 1">
+        </div>
+        <div class="form-group">
+          <label for="sel1">Código:</label>
+          <input ng-model="newOffer.code" class="form-control" type="text" placeholder="Ej. veranoGodin">
+        </div>
+        <label for="sel1">Oferta: </label>
+        <div class="row">
+          <div class="col-sm-6" style="padding: 0">
+            <div class="form-group" >
+              <input ng-model="newOffer.amount" class="form-control" type="number" placeholder="Ej. 100 (Pesos de descuento) ó 10 (Por ciento % de descuento)">
+            </div>
+          </div>
+          <div class="col-sm-6" style="padding: 0">
+            <div class="form-group">
+              <select class="form-control"  ng-model="newOffer.concept">
+                <option value="percentage">% de descuento</option>
+                <option value="price">$ de descuento sobre el precio</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Subir Oferta">
+      </form>
+    </div>
+  </div>
+</modal>

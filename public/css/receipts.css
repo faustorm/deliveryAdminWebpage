@@ -1,0 +1,35 @@
+.bank-header p {
+  font-size: 18px;
+  text-align: center;
+  color: #515152
+}
+.bank-body strong{
+  font-size: 12px;
+  color: #262627;
+}
+.bank-body p {
+  font-size: 12px;
+}
+.no-outline {
+  border: 0 !important;
+}
+.deposit-body bagel {
+  float: right;
+  font-weight: bold;
+  font-size: 18px;
+}
+.deposit-body strong{
+  font-size: 16px;
+  color: #262627;
+}
+.charge-list p {
+  display: inline-block;
+  margin-top: 9px;
+  font-size: 12px;
+}
+.charge-list caret {
+    float: right;
+    font-size: 15px;
+    margin-top: 4px;
+    font-weight: bold;
+}

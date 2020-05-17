@@ -1,0 +1,316 @@
+<div class="spinnerDiv" style="display: none;">
+	<div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+<div class="row" >
+  <div class="col-xs-12 col-sm-2" style="padding: 0; " ng-if="PlaceData.length != 0">
+  	<div class="sidebar-nav navbar-collapse navbar-default collapse" style="padding: 0; background-color: #f8f8f8; ">
+      <ul class="nav" id="side-menu">
+      	<li ng-repeat="admin in Zones" ng-if="admin.idZone != zone.id">
+        	<a ng-click="changeZone(admin.idZone, admin.Zone.name)">
+        		<div class="row">
+          		<div class="col-xs-10" style="font-size: 12px;">
+          			<strong>{{admin.Zone.name}}</strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+        <li >
+        	<a href="/admins">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Administradores</strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+        <li>
+        	<a href="/vehicles">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Vehiculos </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+				<li>
+        	<a href="/drivers">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Conductores </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+				<li>
+        	<a href="/places">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Lugares </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+				<li>
+        	<a href="/pay/bill">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Depositar </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+				<li>
+        	<a href="/data">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Estadisticas </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+				<li>
+        	<a href="/promotions">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Promociones </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+				<li>
+        	<a href="/users">
+        		<div class="row">
+          		<div class="col-xs-12" style="font-size: 12px;">
+          			<strong> Usuarios </strong>
+          		</div>
+          	</div>
+        	</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-10" style="padding: 0; zoom: 78%;">
+		<div class="container place-container">
+	  	<div class="row">
+	    	<div class="col-md-12">
+	      	<h2 class="place-header"> {{zone.name}} </h2>
+		  	</div>
+		  </div>
+			<div class="row">
+				<div class="col-md-4" >
+					<h2 class="section-title margin-bottom ">Viajes por venir </h2>
+					<div class="panel btn-shadow">
+			      <div class="panel-body service-body">
+							<table class="table table-striped no-margin">
+								<thead>
+									<tr>
+										<th>Estara listo en</th>
+										<th>Lugar</th>
+										<th>Cancelar</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="trip in UpcomingTrips | orderBy:'-callTime'" class="mainTable">
+										<td><span am-time-ago="trip.callTime"></span></td>
+										<td>{{trip.place}} </td>
+										<td>
+											<button ng-click="cancelTrip(trip.id)" type="button" class="btn btn-block btn-delete-outline">
+					              Cancelar
+					            </button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+			 			</div>
+					</div>
+				</div>
+				<div class="col-md-4" >
+					<h2 class="section-title margin-bottom ">Viajes sin confirmar </h2>
+					<div class="panel btn-shadow">
+			      <div class="panel-body service-body">
+							<table class="table table-striped no-margin">
+								<thead>
+									<tr>
+										<th>Comida Lista</th>
+										<th>Lugar</th>
+										<th>Cancelar</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="trip in UnconfirmedTrips | orderBy:'-callTime'" class="mainTable">
+										<td><span am-time-ago="trip.callTime"></span></td>
+										<td>{{trip.place}} </td>
+										<td>
+											<button type="button" ng-click="cancelTrip(trip.id)" class="btn btn-block btn-delete-outline">
+					              Cancelar
+					            </button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+			 			</div>
+					</div>
+				</div>
+				<div class="col-md-4" >
+					<h2 class="section-title margin-bottom ">Viajes en curso </h2>
+					<div class="panel btn-shadow">
+			      <div class="panel-body service-body">
+							<table class="table table-striped no-margin">
+								<thead>
+									<tr>
+										<th>Repartidor</th>
+										<th>Lugar</th>
+										<th>Tiempo</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="trip in OnCourseTrips | orderBy:'-id'" class="mainTable">
+										<td>{{trip.name}}</td>
+										<td>{{trip.place}} </td>
+										<td><span am-time-ago="trip.callTime"></span></td>
+									</tr>
+								</tbody>
+							</table>
+			 			</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8" >
+					<h2 class="section-title margin-bottom ">Ordenes Pendientes</h2>
+					<div class="panel btn-shadow">
+						<div class="panel-body service-body">
+							<table class="table">
+							 <thead>
+								 <tr>
+									 <th>Restaurante</th>
+									 <th>Cliente</th>
+									 <th>Tipo</th>
+									 <th>Tiempo</th>
+									 <th>Plus</th>
+									 <th>Contacto</th>
+								 </tr>
+							 </thead>
+							 <tbody>
+								 <tr ng-repeat="order in pendingOrders">
+									 <td>{{order.Place.place}} ({{order.Place.branch}})</td>
+									 <td>{{order.User.name}}</td>
+									 <td>
+										 <p ng-if="order.type == 'homeDelivery'">
+											 A Domicilio
+										 </p>
+										 <p ng-if="order.type == 'pickUp'">
+											 Para llevar
+										 </p>
+									 </td>
+									 <td><span am-time-ago="order.createdAt"></span></td>
+									 <td>
+										 <button type="button" ng-click="extendOrder(order.id)" class="btn btn-submit-outline">
+											 Extender
+										 </button>
+									 </td>
+									 <td>
+										 <a href="tel:{{order.Place.phoneNumber}}">
+											 {{order.Place.phoneNumber}}
+										 </a>
+									 </td>
+								 </tr>
+							 </tbody>
+						 </table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" >
+					<h2 class="section-title margin-bottom ">Solicitud de Prestamo </h2>
+					<div class="panel btn-shadow">
+						<div class="panel-body service-body">
+							<table class="table table-striped no-margin">
+								<thead>
+									<tr>
+										<th>Repartidor</th>
+										<th>Lugar</th>
+										<th>Tiempo</th>
+										<th>Cantidad</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="loan in Loans | orderBy:'+createdAt'" class="mainTable">
+										<td>
+											<h5 class="text-link" style="color: #666; text-decoration: underline; cursor: pointer;" ng-click="AnalyzeLoanModal(loan, loan.idDriver)">{{loan.name}}</h5>
+										</td>
+										<td>{{loan.place}}</td>
+										<td><span am-time-ago="loan.createdAt"></span></td>
+										<td>${{loan.amount}} MXN</td>
+									</tr>
+								</tbody>
+							</table>
+							<a ng-click="AddLoanModal()">
+								<button type="button" class="btn btn-block btn-submit">Agregar Prestamo</button>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<couponmodal visible="addingLoan">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='uploadLoan(loan)'>
+        <div class="form-group" >
+          <label for="sel1">Cantidad: ($) </label>
+          <input ng-model="loan.amount" type="number" class="form-control" placeholder="Cantidad que traspasaras" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group">
+          <label for="sel1">Viaje al que se traspasara: </label>
+          <select class="form-control"  ng-model="loan.idTrip">
+            <option ng-repeat="trip in OnCourseTrips" value="{{trip.id}}" >{{trip.name}} - {{trip.place}}</option>
+          </select>
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Agregar Conductor">
+      </form>
+    </div>
+  </div>
+</couponmodal>
+<couponmodal visible="analyzingLoan">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+			<div class="row">
+				<div class="col-xs-12">
+					<strong><p>Historial</p></strong>
+					<div class="list-group">
+		        <a href="#" class="list-group-item right-list product-item" ng-repeat="loan in LoanHistory">
+		          <p>{{loan.place}} - <span am-time-ago="loan.createdAt"></span> - ${{loan.amount}} MXN</p>
+		        </a>
+		      </div>
+					<table class="table table-striped no-margin">
+						<thead>
+							<tr>
+								<th>Lugar</th>
+								<th>Tiempo</th>
+								<th>Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="mainTable">
+								<td>{{mainLoan.place}}</td>
+								<td><span am-time-ago="mainLoan.createdAt"></span></td>
+								<td>${{mainLoan.amount}} MXN</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<input type="button" class="btn btn-submit btn-shadow btn-full" ng-click="approveLoan(1)" value="Aprobar pago">
+				</div>
+				<div class="col-xs-6">
+					<input type="button" style="width: 100%;" class="btn btn-remove btn-shadow btn-full" ng-click="approveLoan(3)" value="Declinar pago">
+				</div>
+			</div>
+    </div>
+  </div>
+</couponmodal>

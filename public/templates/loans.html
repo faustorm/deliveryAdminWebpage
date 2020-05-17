@@ -1,0 +1,22 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Prestamos </h2>
+      <h2 class="alone-subtitle">Historial de prestamos a conductores <br> para ordenes</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="list-group">
+        <a href="#" class="list-group-item right-list product-item" ng-repeat="loan in loans">
+          <p> {{loan.name}} <text> - ${{loan.amount}} MXN </text> <span am-time-ago="trip.callTime"></span> - <pepe style="color: #992626" ng-if="loan.approved == 3">Rechazado</pepe> <pepe style="color: #78A676" ng-if="loan.approved == 1">Aprovado</pepe></p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

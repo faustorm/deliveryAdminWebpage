@@ -1,0 +1,23 @@
+.pay-header p {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #7C7C7D;
+}
+.pay-header p i {
+  color: #FFEB7F;
+  font-size: 18px;
+}
+.pay-body h1 {
+  color: #A3A3A4;
+  font-size: 13px;
+  margin: 0 0 10px;
+}
+
+.pay-body p {
+  color: #7C7C7D;
+  font-size: 18px;
+  margin: 0 0 10px;
+  margin-left: 15px;
+  word-break: break-all;
+}

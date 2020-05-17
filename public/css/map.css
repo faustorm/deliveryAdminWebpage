@@ -1,0 +1,12 @@
+.map-card img {
+  height: 70px;
+  width: 70px;
+  border: 1px solid white;
+}
+.map-card {
+  width: 60%;
+  margin-left: 20%;
+  padding: 10px;
+  box-shadow: 2px 2px 5px #888888;
+  margin-bottom: 15px;
+}

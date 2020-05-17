@@ -1,0 +1,105 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 title-section">
+      <h2 class="alone-header"> Manten activo tu restaurante </h2>
+      <h2 class="alone-subtitle">$499 MXN / Mes por todos los servicios de manera ilimitada, sin comisiones o costos extras.</h2>
+      <a data-toggle="modal" ng-if="payingFirstPlace != true && place.hidden == 3" ng-click="preparePayFirstPlace()">
+        <button type="button" class="btn btn-shadow btn-submit btn-title"> Activar establecimiento </button>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div style="background: url({{place.coverPicture}}); height: 160px;background-size: cover;background-repeat: no-repeat; background-position: 50% 50%;">
+          <div class="card-header">
+            <div class="row left-padding">
+              <div class="col col-20" >
+                <img src="{{place.logo}}" class="img-circle logo-card">
+              </div>
+              <div class="col col-80" style="padding-left: 10px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card review-card" ng-if="payingFirstPlace == false">
+        <div class="pay-header">
+          <p>VENCE EL</p>
+        </div>
+        <div class="pay-body">
+          <h1>{{place.expirationDate | date: 'fullDate'}}</h1>
+          <input type="button" ng-if="payingPlace == false && place.hidden == 0" ng-click="preparePayPlace()" class="btn-full btn btn-option btn-shadow" style="width: 100%;" value="Pagar mensualidades">
+          <input type="button" ng-if="payingPlace == false && place.hidden == 1" ng-click="preparePayPlace()" class="btn-full btn btn-option btn-shadow" style="width: 100%;" value="Reactivar establecimiento">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="row" ng-if="payingPlace == true">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="card card-promotional">
+            <strong>
+              <p class="section-title">
+                Pagar Mensualidad
+              </p>
+            </strong>
+            <p class="text-center">Cada mes equivale a $499 MXN <br>(De manera limitada, precio regular $899 MXN)</p>
+            <form ng-submit='payPlace(pay)'>
+              <div class="form-group">
+                <label for="sel1" style="color: #666">Tarjeta De Credito </label>
+                <select class="form-control" id="sel1" ng-model="pay.card">
+                  <option ng-repeat="card in Cards" value="{{card.token}}">{{card.cardName}} - {{card.bankName}}</option>
+                </select>
+              </div>
+              <button type="button" ng-click="prepareAddCard()" style="margin-bottom: 15px;" class="btn btn-warning-outline">
+                Agregar Tarjeta de Crédito
+              </button>
+              <div class="form-group">
+                <label for="sel1" style="color: #666">Tiempo a pagar</label>
+                <select class="form-control" ng-model="pay.months" id="sel1">
+                  <option value="1">1 Mes</option>
+                  <option value="2">2 Meses</option>
+                  <option value="3">3 Meses</option>
+                  <option value="6">6 Meses</option>
+                  <option value="12">1 Año</option>
+                  <option value="24">2 Años</option>
+                </select>
+              </div>
+              <button ng-if="pay.months != null && pay.card != null" type="submit" class="btn btn-lg btn-block btn-submit">Pagaras ${{499 * pay.months}} MXN por {{pay.months}} meses mas</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-if="payingFirstPlace == true">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="card card-promotional">
+            <strong>
+              <p class="section-title">
+                Activar {{place.place}}
+              </p>
+            </strong>
+            <p class="text-center">Por $499 MXN, te daremos 3 meses al precio de uno con todos los servicios ilimitados.</p>
+            <form ng-submit='payFirstPlace(pay)'>
+              <div class="form-group">
+                <label for="sel1" style="color: #666">Tarjeta De Credito </label>
+                <select class="form-control" id="sel1" ng-model="pay.card">
+                  <option ng-repeat="card in Cards" value="{{card.token}}">{{card.cardName}} - {{card.bankName}}</option>
+                </select>
+              </div>
+              <button type="button" ng-click="prepareAddCard()" style="margin-bottom: 15px;" class="btn btn-warning-outline">
+                Agregar Tarjeta de Crédito
+              </button>
+              <button type="submit" class="btn btn-lg btn-submit btn-block">Pagaras $499 MXN por 3 meses al precio de 1.</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-include src="'../templates/bar.html'"></ng-include>
+<cardmodal visible="addingCard"></cardmodal>

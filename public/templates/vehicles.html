@@ -1,0 +1,112 @@
+<div class="spinnerDiv" style="display: none;">
+  <div class="loader"></div>
+</div>
+<ng-include src="'../templates/bar.html'"></ng-include>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="alone-header"> Vehiculos en {{zone.name}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <a data-toggle="modal" ng-click="prepareAddVehicle()">
+      <button type="button" class="btn btn-shadow btn-submit btn-title"> Agregar Vehiculo </button>
+    </a>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="card card-promotional">
+        <strong >
+          <p class="section-title">
+            Vehiculos
+          </p>
+        </strong>
+        <div class="list-group">
+          <a href="#" class="list-group-item disabled">Activos</a>
+          <a href="#" class="list-group-item right-list product-item" ng-repeat="vehicle in vehicles" ng-if="vehicle.active == 1">
+            <p> {{vehicle.model}} ({{vehicle.type}}) <text> - {{vehicle.plates}} </text></p>
+            <button type="button" ng-click="prepareEditVehicle(vehicle.id)" class="btn btn-warning-outline">
+              Editar
+            </button>
+          </a>
+          <a href="#" class="list-group-item disabled">Descompuestos / Inactivos</a>
+          <a href="#" class="list-group-item right-list product-item" ng-repeat="vehicle in vehicles" ng-if="vehicle.active == 0">
+            <p> {{vehicle.model}} ({{vehicle.type}}) <text> - {{vehicle.plates}} </text></p>
+            <button type="button" ng-click="prepareEditVehicle(vehicle.id)" class="btn btn-warning-outline">
+              Editar
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<couponmodal visible="addingVehicle">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='uploadVehicle(vehicle)'>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Tipo de Vehiculo: </label>
+          <select class="form-control"  ng-model="vehicle.type">
+            <option value="Motocicleta">Motocicleta</option>
+            <option value="Bicicleta">Bicicleta</option>
+            <option value="Automovil">Automovil</option>
+            <option value="Camioneta">Camioneta</option>
+          </select>
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Modelo: </label>
+          <input ng-model="vehicle.model" type="text" class="form-control" placeholder="Modelo" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Placas: </label>
+          <input ng-model="vehicle.plates" type="text" class="form-control" placeholder="Placas del vehiculo" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Color: </label>
+          <input ng-model="vehicle.color" type="text" class="form-control" placeholder="Color del vehiculo" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Año: </label>
+          <input ng-model="vehicle.year" type="text" class="form-control" placeholder="Año del vehiculo" aria-describedby="basic-addon1">
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Guardar Vehiculo">
+      </form>
+    </div>
+  </div>
+</couponmodal>
+<couponmodal visible="editingVehicle">
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <form ng-submit='editVehicle(vehicle)'>
+        <div class="form-group">
+          <label for="sel1" class="input-direction">Tipo de Vehiculo: </label>
+          <select class="form-control"  ng-model="vehicle.type">
+            <option value="Motocicleta">Motocicleta</option>
+            <option value="Bicicleta">Bicicleta</option>
+            <option value="Automovil">Automovil</option>
+            <option value="Camioneta">Camioneta</option>
+          </select>
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Modelo: </label>
+          <input ng-model="vehicle.model" type="text" class="form-control" placeholder="Modelo" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Placas: </label>
+          <input ng-model="vehicle.plates" type="text" class="form-control" placeholder="Placas del vehiculo" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Color: </label>
+          <input ng-model="vehicle.color" type="text" class="form-control" placeholder="Color del vehiculo" aria-describedby="basic-addon1">
+        </div>
+        <div class="form-group" >
+          <label for="sel1">Año: </label>
+          <input ng-model="vehicle.year" type="text" class="form-control" placeholder="Año del vehiculo" aria-describedby="basic-addon1">
+        </div>
+        <input type="submit" class="btn btn-submit btn-shadow btn-full" value="Guardar Vehiculo">
+      </form>
+    </div>
+  </div>
+</couponmodal>

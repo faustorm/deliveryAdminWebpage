@@ -1,0 +1,26 @@
+{
+  "name": "lookatadmin",
+  "description": "pagina administrador",
+  "main": "index.js",
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.2",
+    "moment": "^2.17.1",
+    "angular-moment": "^1.0.1",
+    "angular-file-upload": "^2.4.0",
+    "angular-img-cropper": "^1.1.0",
+    "angularjs-datepicker": "^2.1.19",
+    "ngmap": "^1.18.4",
+    "angular-slick": "^0.2.1"
+  }
+}
